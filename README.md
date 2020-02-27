@@ -3,9 +3,7 @@
 
 # Observation
 
-
 library(ISLR)
-?
 fix(Weekly)
 cor(Weekly[-9])
 plot(Weekly)
@@ -15,7 +13,6 @@ attach(Weekly)
 
 
 glm.fit=glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume, Weekly, family=binomial)
-summary(glm.fit)
 glm.prob=predict(glm.fit,type="response")
 glm.pred=rep("Down",1089)
 glm.pred[glm.prob>.5]="Up"
