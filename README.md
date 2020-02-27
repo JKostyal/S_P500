@@ -1,7 +1,8 @@
 # S_P500
 
 
-#Observation
+# Observation
+
 
 library(ISLR)
 ?
@@ -12,6 +13,7 @@ attach(Weekly)
 
 #Logistic Regression
 
+
 glm.fit=glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume, Weekly, family=binomial)
 summary(glm.fit)
 glm.prob=predict(glm.fit,type="response")
@@ -20,7 +22,8 @@ glm.pred[glm.prob>.5]="Up"
 table(glm.pred,Direction)
 mean(glm.pred==Direction)
 
-## split data into training and test
+# split data into training and test
+
 
 attach(Weekly)
 train=Year<2009
@@ -28,7 +31,8 @@ Weekly.2008=Weekly[!train,]
 Direction.2008=Direction[!train]
 
 
-#Logistic Regression, one significant predictor
+# Logistic Regression, one significant predictor
+
 
 glm.fit1=glm(Direction~Lag2,Weekly,family=binomial,subset=train)
 glm.prob1=predict(glm.fit1, Weekly.2008,type="response")
@@ -39,7 +43,8 @@ mean(glm.pred1==Direction.2008)
 mean(glm.pred1!=Direction.2008)
 
 
-#Linear Discriminant Analysis
+# Linear Discriminant Analysis
+
 
 library(MASS)
 lda.fit=lda(Direction~Lag2,Weekly,subset=train)
@@ -49,11 +54,10 @@ names(lda.pred)
 lda.class=lda.pred$class
 table(lda.class,Direction.2008)
 mean(lda.class==Direction.2008)
-sum(lda.pred$posterior[,1]>=0.5)
-sum(lda.pred$posterior[,1]<0.5)
 
 
-#Quadratic Discriminant Analysis
+# Quadratic Discriminant Analysis
+
 
 qda.fit=qda(Direction~Lag2+I(Lag2^2),Weekly,subset=train)
 qda.pred=predict(qda.fit,Weekly.2008)
@@ -63,6 +67,7 @@ table(qda.class,Direction.2008)
 mean(qda.class==Direction.2008)
 
 # K-Nearest Neighbors 
+
 library(class)
 attach(Weekly)
 train.x=cbind(Lag1,Lag2)[train,]
